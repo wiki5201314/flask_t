@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dollar采集系统</title>
+
+    <link href="{{ url_for('static',filename='/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+
+    <link href="{{ url_for('static',filename='/css/animate.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='/css/style.css')}}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">DO+</h1>
+
+            </div>
+            <h3>欢迎登录产品采集系统</h3>
+            <p>请登录</p>
+            <form class="m-t" role="form" action="login" method="post">
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="" name="pwd">
+                </div>
+                {% if error %}
+                <div class="alert alert-danger">{{error}}</div>
+                {% endif %}
+                <button type="submit" class="btn btn-primary block full-width m-b">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{{ url_for('static',filename='/js/jquery-3.5.1.js')}}"></script>
+    <script src="{{ url_for('static',filename='/js/bootstrap.min.js')}}"></script>
+
+</body>
+
+</html>

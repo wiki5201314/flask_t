@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/bootstrap-clearmin.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/roboto.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/material-design.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/small-n-flat.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/font-awesome.min.css')}}">
+        {% block css %}{% endblock %}
+        <title>{{ title }}</title>
+    </head>
+<body class="cm-no-transition cm-2-navbar">
+    <div id="cm-menu">
+        <nav class="cm-navbar cm-navbar-primary">
+            <div class="cm-flex"><a href="/home" class="cm-logo"></a></div>
+            <div class="btn btn-primary md-menu-white" data-toggle="cm-menu"></div>
+        </nav>
+        <div id="cm-menu-content">
+            <div id="cm-menu-items-wrapper">
+                <div id="cm-menu-scroller">
+                    <ul class="cm-menu-items">
+                        <li><a href="/home" class="sf-house">首页</a></li>
+                        <li {% if cu == "0" %}class="active"{% endif %}><a href="upload?cu=0" class="sf-dashboard">采集WISH ID</a></li>
+                        <li class="cm-submenu {% if cu and cu != "0" and cu != "100" and cu != "101" %}open{% endif %}">
+                            <a class="sf-window-layout">采集定制产品<span class="caret"></span></a>
+                            <ul>
+                                {% for menu in menus %}
+                                <li {% if cu == menu %}class="active"{% endif %}><a href="upload?cu={{menu}}">{{menus[menu]}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="cm-submenu {% if cu != "0" and (cu == "100" or cu == "101") %}open{% endif %}" {% if cu and cu != "0" and cu != "100" and cu != "101" %}style="transform: translateY(273px);"{% endif %}>
+                            <a class="sf-window-layout">速卖通采集<span class="caret"></span></a>
+                            <ul>
+                                <li {% if cu == "100" %}class="active"{% endif %}><a href="upload?cu=100">wishID 手机壳采集</a></li>
+                                <li {% if cu == "101" %}class="active"{% endif %}><a href="upload?cu=101">页数手机壳采集</a></li>
+                            </ul>
+                        </li>
+                        <li {% if cu and cu != "0" and cu != "100" and cu != "101" %}style="transform: translateY(273px);"{% endif %}{% if cu != "0" and (cu == "100" or cu == "101") %}style="transform: translateY(78px);"{% endif %}><a href="check" class="sf-notepad">检查没上网订单</a></li>
+                        <li {% if cu and cu != "0" and cu != "100" and cu != "101" %}style="transform: translateY(273px);"{% endif %}{% if cu != "0" and (cu == "100" or cu == "101") %}style="transform: translateY(78px);"{% endif %}><a href="logout" class="sf-lock-open">退出登录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header id="cm-header">
+            <nav class="cm-navbar cm-navbar-primary">
+                <div class="btn btn-primary md-menu-white hidden-md hidden-lg" data-toggle="cm-menu"></div>
+                <div class="cm-flex">
+                    <h1>{% if not cu %}
+                        首页
+                        {% elif cu == '0'%}
+                        采集wish ID
+                        {% elif cu == '100' or cu == '101'%}
+                        速卖通采集
+                        {% else %}
+                        {{menus[cu]}}
+                        {% endif %}
+                    </h1>
+                </div>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-primary md-notifications-white" data-toggle="dropdown"> <span class="label label-danger">0</span> </button>
+                    <div class="popover cm-popover bottom">
+                        <div class="arrow"></div>
+                        <div class="popover-content">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading text-overflow">
+                                        <i class="fa fa-fw fa-envelope"></i> 没事情
+                                    </h4>
+                                    <p class="list-group-item-text text-overflow">没事情</p>
+                                </a>
+                            </div>
+                            <div style="padding:10px"><a class="btn btn-success btn-block" href="#">Show me more...</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-primary md-account-circle-white" data-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li class="disabled text-center">
+                            <a style="cursor:default;"><strong>{{user}}</strong></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="settings_brands"><i class="fa fa-fw fa-cog"></i> Settings</a>
+                        </li>
+                        <li>
+                            <a href="logout"><i class="fa fa-fw fa-sign-out"></i> Sign out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="cm-navbar cm-navbar-default cm-navbar-slideup">
+                <div class="cm-flex">
+                    <div class="nav-tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li><a href="#">Sales analytics</a></li>
+                            <li><a href="#">Website Visitors</a></li>
+                            <li class="active"><a href="#">Server Stats</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pull-right" style="border-left:1px solid #e5e5e5"><a title="Download as PDF" class="btn btn-default btn-light md-file-download"></a></div>
+                <div class="pull-right"><a title="Customize indicators" class="btn btn-default btn-light md-settings"></a></div>
+            </nav>
+        </header>
+{% block content %}{% endblock %}
+<footer class="cm-footer"><span class="pull-left">Connected as Buroni</span><span class="pull-right">&copy; BURONI</span></footer>
+</div>
+        <script src="{{ url_for('static',filename='/assets/js/jquery-3.5.1.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='/assets/js/jquery.mousewheel.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='/assets/js/jquery.cookie.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='/assets/js/fastclick.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='/assets/js/bootstrap.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='/assets/js/clearmin.min.js')}}"></script>
+        {% block js %}{% endblock %}
+    </body>
+</html>

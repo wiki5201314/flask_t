@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/assets/css/summernote.css')}}">
+{% endblock %}
+{% block content %}
+        <div id="global">
+            <div class="container-fluid">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{title}}</div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th colspan="2" rowspan="1" style='text-align: center;'>编辑</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for brand in brands %}
+        <tr>
+        <td>{{ brand.brand_id }}</td>
+        <td>{{ brand.brand_name }}</td>
+        <td><a href="/brands_update/{{ brand.id }}"  class="btn btn-primary">修改</a> </td>
+        <td><a href="/brands_dele/{{ brand.id }}"  class="btn btn-danger">删除</a></td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+</table>
+<a href="/brands_add"  class="btn btn-success">添加品牌</a>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static',filename='/assets/js/summernote.min.js')}}"></script>
+<script src="{{ url_for('static',filename='/assets/js/demo/notepad.js')}}"></script>
+<script type="text/javascript">
+    var ws = new WebSocket('ws://8.210.229.238:5000/collect');
+    ws.onmessage = function (data) {
+        var message = JSON.parse(data.data)
+
+        // 显示信息
+        var text_div = document.getElementById('text_div');
+        var myDate = new Date();
+        var mytime = myDate.toLocaleTimeString();
+
+        var add_msg = '<h6>' + mytime + " " + message.msg + '</h6>';
+        text_div.innerHTML = add_msg;
+
+        //显示进度条
+        var percent = message.percent
+        var progress_bar = document.getElementById('progress_bar');
+        progress_bar.style.cssText = "width: " + percent + "%;"
+
+        //当数据上传完毕，按钮可用
+        if(message.msg == "上传完成"){
+            var submit = document.getElementById('submit');
+            submit.disabled = "";
+        }
+    }
+    function send_msg(){
+        //按钮不可用
+        var submit = document.getElementById('submit');
+        submit.disabled = 'disabled';
+
+        var msg = document.getElementById('pages').value;
+        var cu = document.getElementById('cu').value;
+        var merchants = document.getElementById('merchants').value;
+        message = {
+            msg: msg,
+            cu: cu,
+            merchants: merchants
+        }
+        ws.send(JSON.stringify(message));
+    }
+</script>
+{% endblock %}
