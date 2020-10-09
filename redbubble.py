@@ -131,6 +131,7 @@ class RedBubble(object):
 
             title = self._titles[i].replace(self._title_cut, " ")[:40] + " " + ''.join(
                 random.sample('zyxwvutsrqponmlkjihgfedcba', 3))
+            title = title.replace("Mask", "")
             title = re.sub('[.<>:|/\\*?!;#\"\']', '', title)
             title = ' '.join(title.split())
             self._titles[i] = title
