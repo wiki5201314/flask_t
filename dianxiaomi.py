@@ -482,8 +482,8 @@ class UploadNew(Dianxiaomi):
 		self._product_detail["imageStr"] = "&-&".join(["null"] * len(sizes))
 		self._product_detail["sizeStr"] = sizeStr
 		self._product_detail["colorStr"] = "&-&".join(["null"] * len(sizes))
-		self._product_detail["priceStr"] = "2.0&-&3.0"
-		self._product_detail["localizedPriceStr"] = "2.0&-&3.0"
+		self._product_detail["priceStr"] = "3.0&-&3.0"
+		self._product_detail["localizedPriceStr"] = "3.0&-&3.0"
 		self._product_detail["msrpStr"] = "&-&".join(["4.0"] * len(sizes))
 		self._product_detail["goodsNumStr"] = "30&-&9999"
 		self._product_detail["sTimeStr"] = "&-&".join(["7"] * len(sizes))
@@ -492,7 +492,7 @@ class UploadNew(Dianxiaomi):
 		if self._localized == "CN":
 			self._product_detail["localizedShipping"] = "7"
 			self._product_detail["localizedPrice"] = "21"
-			self._product_detail["localizedPriceStr"] = "14&-&21"
+			self._product_detail["localizedPriceStr"] = "21&-&21"
 
 		self._sku = " Cover"
 		self._title = " Cute Cartoon Face Cover Unisex Outdoor Sport Protective"
